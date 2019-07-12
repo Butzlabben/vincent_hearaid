@@ -95,12 +95,12 @@ class _AudioTileState extends State<AudioTile> {
 
   @override
   void initState() {
-//    _sub = widget.cache.fixedPlayer.onPlayerStateChanged.listen((state) {
-//      if (state != AudioPlayerState.PLAYING)
-//        setState(() {
-//          playing = false;
-//        });
-//    });
+    _sub = widget.cache.fixedPlayer.onPlayerStateChanged.listen((state) {
+      if (state != AudioPlayerState.PLAYING)
+        setState(() {
+          playing = false;
+        });
+    });
     super.initState();
   }
 
@@ -147,7 +147,9 @@ class _AudioTileState extends State<AudioTile> {
 
   onPressed() {
     if (!playing) {
-      widget.cache.fixedPlayer.play(widget.path);
+      if(widget.cache.fixedPlayer.state == AudioPlayerState.PLAYING)
+        widget.cache.fixedPlayer.stop();
+      widget.cache.play(widget.path);
     } else
       widget.cache.fixedPlayer.stop();
     setState(() {
